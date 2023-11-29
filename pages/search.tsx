@@ -1,10 +1,10 @@
 import React, {useContext, useLayoutEffect, useState} from 'react';
-import {Box, Button, CircularProgress, IconButton, SxProps, TextField} from "@mui/material";
+import {Box, Button, Card, CircularProgress, Container, IconButton, SxProps, TextField} from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import {MyAppContext} from "@/pages/_app";
 import {enqueueSnackbar} from 'notistack';
 import MessagesList from "@/components/MessagesList"
-
+import request from 'umi-request';
 
 function stubSearchResult(count: number, query: string, page: number) {
     const out = [];
@@ -21,6 +21,7 @@ function stubSearchResult(count: number, query: string, page: number) {
             peer_id: -1001888888888,
             msg_id: 10000 + i,
             mongo_id: `${query}-${i}`,
+            image_text: "这是测试测试测试图片中的文字显示"
         })
     }
     return {
@@ -49,7 +50,6 @@ function LoadMoreBtn(props: any) {
     if (noMore) {
         comp = noMoreComp
     } else if (loading) {
-        console.log("JKLJKLSDF")
         disabled = true
         comp = loadingComp
     } else {
@@ -75,21 +75,27 @@ async function getResult(query: string, page: number) {
         },
         body: JSON.stringify({
             q: query,
-            ins_id: telegram.WebApp.initDataUnsafe.chat_instance,
+            // fixme: 这里应该改成其他的可用的群，但是我暂时想不到他妈的应该怎么过滤，懒狗不想动了，又他妈的没工资
+            ins_id: telegram?.WebApp?.initDataUnsafe?.chat_instance,
             page: page,
         }),
     }
-    const resp = await fetch(`/api/v1/tg/search`, option);
-    if (!resp.ok) {
-        enqueueSnackbar(`搜索失败，请前往通知区域检查API返回值。 Code: ${resp.status}`, {variant: "error"})
+    try {
+        const resp = await request.post(`/api/v1/tg/search`, option);
+        console.log(resp, typeof resp);
+        // @ts-ignore
+        window.resp = resp;
+        // @ts-ignore
+        window.request = request;
+        return {result: resp};
+    } catch (e) {
+        enqueueSnackbar(`搜索失败，请前往通知区域检查API返回值。 Code: ${e}`, {variant: "error"})
         if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
             // dev code
             return stubSearchResult(1, query, page);
         }
         return {result: {hits: []}}
     }
-    return await resp.json();
-
 }
 
 export default function Search(props: any) {
@@ -141,7 +147,7 @@ export default function Search(props: any) {
     }
 
     return (
-        <><Box sx={{pr: 2, pl: 2, width: "100%"}}><TextField
+        <><Box pl={2} pr={2} width={'100%'}><TextField
             fullWidth
             label='搜索' variant="outlined"
             value={searchInput} onChange={event => setSearchInput(event.target.value)}

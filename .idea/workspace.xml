@@ -4,23 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2391af6-3686-4541-8d2e-1d37b25a02ce" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/Appbar/Appbar.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/MessagesList.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/ScrollToTopBtn.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/favourite.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/search.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/static/contemplative-reptile.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/MessageType.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/favouriteMessage.ts" afterDir="false" />
+    <list default="true" id="d2391af6-3686-4541-8d2e-1d37b25a02ce" name="Changes" comment="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失">
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/verify.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MessagesList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MessagesList.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_document.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_document.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/styles/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/search.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,8 +33,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -42,6 +44,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2NVdv1I9qIkq17YOcV16LimWUNx" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -60,7 +65,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;http.proxy&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\manni\\WebstormProjects\\nextsearch\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -102,11 +107,36 @@
       <workItem from="1682703170214" duration="51000" />
       <workItem from="1682785553691" duration="142742000" />
       <workItem from="1683109965853" duration="169000" />
-      <workItem from="1683213969698" duration="47215000" />
+      <workItem from="1683213969698" duration="47327000" />
+      <workItem from="1683726421272" duration="8948000" />
+      <workItem from="1683735658651" duration="870000" />
+      <workItem from="1686375517279" duration="3314000" />
+      <workItem from="1686470569093" duration="54000" />
+      <workItem from="1695691173823" duration="2146000" />
+      <workItem from="1695739156187" duration="5505000" />
+      <workItem from="1695777579038" duration="968000" />
+      <workItem from="1695826290893" duration="6556000" />
+      <workItem from="1695914433911" duration="618000" />
+      <workItem from="1699758164140" duration="5058000" />
+      <workItem from="1699784938693" duration="680000" />
+      <workItem from="1699974115919" duration="3761000" />
+      <workItem from="1701263327173" duration="59000" />
     </task>
+    <task id="LOCAL-00001" summary="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失">
+      <created>1683463063214</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1683463063214</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失" />
+    <option name="LAST_COMMIT_MESSAGE" value="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失" />
   </component>
 </project>

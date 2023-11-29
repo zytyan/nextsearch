@@ -6,9 +6,9 @@ import {
     Avatar,
     Card,
     CardContent,
-    CardMedia,
+    CardMedia, Container,
     Drawer,
-    IconButton,
+    IconButton, LinearProgress,
     List,
     ListItem,
     ListItemButton,
@@ -17,7 +17,7 @@ import {
     Menu,
     MenuItem,
     Slide,
-    Typography,
+    Typography, useMediaQuery,
     useScrollTrigger,
 } from "@mui/material";
 import Toolbar from '@mui/material/Toolbar';
@@ -33,6 +33,7 @@ import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import {enqueueSnackbar, SnackbarProvider} from 'notistack';
 import ScrollToTopBtn from "@/components/ScrollToTopBtn";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
+import request from 'umi-request';
 
 function HideAppBar(props: any) {
     const trigger = useScrollTrigger();
@@ -47,35 +48,26 @@ function HideAppBar(props: any) {
         await router.replace("/")
     }
 
-    const [avatarSrc, setAvatarSrc] = useState<string>('');
-    const avatar = (<Avatar
-        sx={{width: 36, height: 36}}
-        src={avatarSrc}/>);
-
     useEffect(() => {
-        if (!ctx.authToken.value || (ctx.userId.value ?? 0) == 0) {
+        if ((props.avatarUserId ?? 0) === 0) {
             return;
         }
-        const url = `/api/v1/tg/profile_photo?user_id=${ctx.userId.value}`;
 
         async function setAvatarFromNet() {
-            const resp = await fetch(url);
-            const blob = await resp.blob();
-            const reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = () => {
-                const base64data = reader.result;
-                setAvatarSrc(`${base64data}`)
-            }
+            const photo = await getProfilePhoto(props.avatarUserId)
+            setAvatarSrc(photo)
         }
 
         setAvatarFromNet().then(_ => {
         });
-    }, [ctx.userId.value, ctx.authToken.value])
-
+    }, [ctx.userId, props.avatarUserId])
+    const [avatarSrc, setAvatarSrc] = useState<string>('');
+    const avatar = (<Avatar
+        sx={{width: 36, height: 36}}
+        src={avatarSrc}/>);
     return (
         <Slide appear={false} direction="down" in={!trigger}>
-            <AppBar {...props}>
+            <AppBar>
                 <Toolbar>
                     <IconButton
                         size="large"
@@ -113,35 +105,14 @@ function HideAppBar(props: any) {
 }
 
 export async function authTelegram(initData: any) {
-    if (window.localStorage.getItem('auth')) {
-        const authDataStorage = window.localStorage.getItem('authDate');
-        if (authDataStorage !== null) {
-            const now = Number(Date.now());
-            const authDate = Number(authDataStorage);
-            if (now - authDate < 50 * 60 * 1000) {
-                return "使用缓存的身份认证成功"
-            }
-        }
-    }
-    const option = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json; charset=utf8",
-        },
-        body: JSON.stringify({
-            init_data: initData
-        })
-    }
-    const resp = await fetch("/api/v1/tg/verify", option)
-    const json = await resp.json()
-    if (!resp.ok) {
-        return json.detail;
-    }
-    window.localStorage.setItem('auth', json.token);
-    window.localStorage.setItem('authDate', Date.now().toString());
-    return "身份认证成功。";
+    return "todo function";
 }
 
+declare global {
+    interface Window {
+        Telegram: any;
+    }
+}
 const usernameCache: any = {};
 
 export async function getUsername(userId: any) {
@@ -363,7 +334,20 @@ export const MyAppContext = React.createContext<Setter<any> | any>({
     userId: null,
     authToken: null,
 });
-
+// 自动添加header
+request.use(async (ctx, next) => {
+    let authData = ""
+    if (window.Telegram?.WebApp?.initData !== undefined) {
+        authData = `Telegram ${window.Telegram.WebApp.initData}`
+    } else {
+        authData = window.localStorage.getItem('auth') ?? ''
+    }
+    ctx.req.options.headers = {
+        Authorization: authData,
+        ...ctx.req.options.headers,
+    }
+    await next();
+}, {global: true})
 
 export default function App({Component, pageProps}: AppProps) {
     const [authing, setAuthing] = useState(false);
@@ -372,7 +356,21 @@ export default function App({Component, pageProps}: AppProps) {
     const darkModeFollowSystem = useStateWithProp(true);
     const userId = useStateWithProp(0);
     const authToken = useStateWithProp('');
+    const value = {
+        authing: {value: authing, set: setAuthing},
+        windowName: useStateWithProp("Home"),
+        drawerOpen: useStateWithProp(false),
+        preferDarkMode, darkModeFollowSystem,
+        authTelegram, userId, authToken
+    }
     useEffect(() => {
+        if (localStorage.userId) {
+            try {
+                value.userId.set(parseInt(localStorage.userId))
+            } catch {
+            }
+        }
+
         if (!verified) {
             return;
         }
@@ -380,8 +378,16 @@ export default function App({Component, pageProps}: AppProps) {
         if (!startParam) {
             return;
         }
-    }, [verified])
+    }, [verified, userId])
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
     useRunOnce(() => {
+        if (localStorage.userId) {
+            try {
+                userId.set(parseInt(localStorage.userId))
+            } catch {
+            }
+        }
+        window.Telegram?.WebApp?.ready();
         // 此处用来保存
         const config = JSON.parse(localStorage.config ?? '{}');
         preferDarkMode.set(config.preferDarkMode ?? preferDarkMode.value);
@@ -408,7 +414,7 @@ export default function App({Component, pageProps}: AppProps) {
         const themeChangedCallback = () => {
             if (darkModeFollowSystem) {
                 // @ts-ignore
-                preferDarkMode.set(window.Telegram.WebApp.colorScheme === "dark");
+                preferDarkMode.set(window.Telegram.WebApp.colorScheme === "dark")
             }
         }
         // @ts-ignore
@@ -421,7 +427,7 @@ export default function App({Component, pageProps}: AppProps) {
     useEffect(() => {
         // @ts-ignore
         const telegram = window.Telegram;
-        userId.set(telegram.WebApp.initDataUnsafe.user?.id ?? -1);
+        userId.set(telegram.WebApp.initDataUnsafe.user?.id ?? 0);
         if (authing) {
             return;
         }
@@ -432,13 +438,13 @@ export default function App({Component, pageProps}: AppProps) {
         }
         const initData = telegram?.WebApp?.initData;
         if (!initData) {
-            enqueueSnackbar("没有初始化数据，可能并不是从链接打开的当前页。请尝试使用链接打开。", {variant: "warning"})
+            // enqueueSnackbar("没有初始化数据，可能并不是从链接打开的当前页。请尝试使用链接打开。", {variant: "warning"})
             return;
         }
         authTelegram(initData).then((result) => {
             console.log(result);
             setAuthing(_ => true);
-            userId.set(telegram.WebApp.initDataUnsafe.user?.id ?? -1);
+            userId.set(telegram.WebApp.initDataUnsafe.user?.id ?? 0);
             const token = window.localStorage.getItem('auth');
             if (token === null) {
                 return;
@@ -448,30 +454,44 @@ export default function App({Component, pageProps}: AppProps) {
             enqueueSnackbar(result, {variant: "warning"})
             setAuthing(_ => false);
         });
-    }, [authing])
+    }, [])
+    const [processing, setProcessing] = useState(0);
+    useRunOnce(() => {
+        request.use(async (ctx, next) => {
+            setProcessing(p => p + 1)
+            try {
+                await next();
+            } finally {
+                setProcessing(p => p - 1)
+            }
+        })
+    })
     return <>
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <SnackbarProvider maxSnack={4}>
-                <MyAppContext.Provider value={{
-                    authing: {value: authing, set: setAuthing},
-                    windowName: useStateWithProp("Home"),
-                    drawerOpen: useStateWithProp(false),
-                    preferDarkMode, darkModeFollowSystem,
-                    authTelegram, userId, authToken
-                }}>
-                    <HideAppBar {...pageProps}/>
+                <MyAppContext.Provider value={value}>
+                    <HideAppBar {...pageProps} avatarUserId={userId.value}/>
+
                     <MainMenu {...pageProps}/>
+
                     <Box sx={{
-                        height: 64 + 16, width: "100%",
+                        height: 64, width: "100%",
                     }}></Box>
+                    {processing > 0 ? <Box sx={{width: '100%'}}>
+                        <LinearProgress/>
+                    </Box> : <></>}
                     <Box sx={{
+                        height: 16, width: "100%",
+                    }}></Box>
+                    <Container sx={{
                         width: "100%", maxWidth: "50em",
                         alignItems: "center",
                         display: "flex", flexDirection: 'column',
                     }}>
+
                         <Component {...pageProps}/>
-                    </Box>
+                    </Container>
                     <ScrollToTopBtn {...pageProps}/>
                 </MyAppContext.Provider>
             </SnackbarProvider>

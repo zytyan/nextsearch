@@ -208,6 +208,27 @@ export class MessageNode extends Component<any, any> {
         )
     }
 
+    getImageText = () => {
+        if (typeof (this.props.result.image_text) === 'string') {
+            return (
+                <CardContent>
+                    <Typography variant="caption">下面的文字不存在于文字消息中，由bot从图片中提取。</Typography>
+                    {this.props.result.image_text.split(/\r?\n/).map((str: string, idx: number) => (
+                        <Typography key={idx}>{str}</Typography>))}
+                </CardContent>
+            )
+        }
+        return (<></>)
+    }
+    getMsgText = () => {
+        if (typeof this.props.result.message === 'string' && this.props.result.message.length > 0) {
+            return (
+                this.props.result.message.split(/\r?\n/)
+                    .map((str: string, idx: number) => (<Typography key={idx}>{str}</Typography>))
+            )
+        }
+        return <></>
+    }
 
     render() {
         return (
@@ -230,10 +251,9 @@ export class MessageNode extends Component<any, any> {
                     subheader={this.getDateStr()}
                 />
                 <CardContent>
-                    {this.props.result.message.split(/\r?\n/)
-                        .map((str: string, idx: number) => (<Typography key={idx}>{str}</Typography>))}
+                    {this.getMsgText()}
                 </CardContent>
-
+                {this.getImageText()}
             </Card>
         );
     }
@@ -252,7 +272,7 @@ export default function MessagesList(props: any) {
                 menuOpen={menuOpen} msgLink={msgLink}
                 msg={msg}
                 searchMenuAnchor={searchMenuAnchor}/>
-            <List sx={{maxWidth: "100%"}}>
+            <List sx={{width: "100%"}}>
                 {messages.map((obj: MessageType) => (
                     <ListItem key={obj.mongo_id}>
                         <MessageNode

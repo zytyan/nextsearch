@@ -65,6 +65,26 @@ export default function Home(props: any) {
                         </CardActions>
                     </Card>
                 </ListItem>
+                <ListItem>
+                    <Card sx={{width: '100%', maxWidth: '50em'}}>
+                        <CardContent>
+                            <Typography variant="h5" sx={{mb: 1.5}}>
+                                网页验证
+                            </Typography>
+                            <Typography variant="body2">
+                                鉴于iOS telegram的问题一大堆，所以开发了网页验证。
+                            </Typography>
+                            <Typography variant="body2">
+                                可以使用bot在网页中验证，这样搜索就可以在网页中进行了。但是暂时还没想到怎么给别的群搜索，目前搜索还是吹水群独享的功能。
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button variant="contained" onClick={routeTo("/verify")}>
+                                前往验证
+                            </Button>
+                        </CardActions>
+                    </Card>
+                </ListItem>
             </List>
         </>
     )
