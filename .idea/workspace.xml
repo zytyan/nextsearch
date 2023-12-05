@@ -4,25 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d2391af6-3686-4541-8d2e-1d37b25a02ce" name="Changes" comment="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sshConfigs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/verify.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/postcss.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="d2391af6-3686-4541-8d2e-1d37b25a02ce" name="Changes" comment="整理代码，提交所有修改fg">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/MessagesList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MessagesList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/search.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/search.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/api/hello.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +108,9 @@
       <workItem from="1699758164140" duration="5058000" />
       <workItem from="1699784938693" duration="680000" />
       <workItem from="1699974115919" duration="3761000" />
-      <workItem from="1701263327173" duration="59000" />
+      <workItem from="1701263327173" duration="1419000" />
+      <workItem from="1701437370520" duration="2930000" />
+      <workItem from="1701776523553" duration="2749000" />
     </task>
     <task id="LOCAL-00001" summary="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失">
       <created>1683463063214</created>
@@ -129,7 +119,15 @@
       <option name="project" value="LOCAL" />
       <updated>1683463063214</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="整理代码，提交所有修改">
+      <option name="closed" value="true" />
+      <created>1701263423431</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1701263423431</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,6 +135,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失" />
-    <option name="LAST_COMMIT_MESSAGE" value="首次提交，增加了搜索和收藏功能&#10;已知问题：搜索可能不会返回正常的用户名&#10;收藏为localStorage实现，会因清除缓存而消失" />
+    <MESSAGE value="整理代码，提交所有修改" />
+    <option name="LAST_COMMIT_MESSAGE" value="整理代码，提交所有修改" />
   </component>
 </project>
