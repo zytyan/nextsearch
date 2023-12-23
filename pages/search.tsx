@@ -81,7 +81,7 @@ async function getResult(query: string, page: number) {
         }),
     }
     try {
-        const resp = await request.post(`/api/v1/tg/search`, option);
+        const resp = await request.post(`https://tgapi.zchan.moe/api/v1/tg/search`, option);
         console.log(resp, typeof resp);
         // @ts-ignore
         window.resp = resp;

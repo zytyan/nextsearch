@@ -121,7 +121,7 @@ export async function getUsername(userId: any) {
     }
     usernameCache[userId] = new Promise((
         async (resolve, reject) => {
-            const resp = await fetch(`/api/v1/tg/username?user_id=${userId}`);
+            const resp = await fetch(`https://tgapi.zchan.moe/api/v1/tg/username?user_id=${userId}`);
             if (!resp.ok) {
                 return reject(`${userId}`)
             }
@@ -140,7 +140,7 @@ export async function getProfilePhoto(userId: any) {
     }
     profilePhoto[userId] = new Promise(
         async (resolve, reject) => {
-            const resp = await fetch(`/api/v1/tg/profile_photo?user_id=${userId}`);
+            const resp = await fetch(`https://tgapi.zchan.moe/api/v1/tg/profile_photo?user_id=${userId}`);
             if (!resp.ok) {
                 reject("not ok");
             }
